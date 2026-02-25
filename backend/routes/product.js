@@ -1,15 +1,15 @@
 import express from "express";
 import { getProductDetails, getProducts, newProduct, updateProduct, deleteProduct } from "../controllers/productControllers.js";
-import { isAuthenticatedUser } from "../middleware/auth.js";
+import { isAuthenticatedUser,authorizeRoles } from "../middleware/auth.js";
 
 
 const router = express.Router();
 
-router.route("/products").get(isAuthenticatedUser,getProducts);
-router.route("/admin/products").post(newProduct);
+router.route("/products").get(getProducts);
+router.route("/admin/products").post(isAuthenticatedUser,authorizeRoles("admin"),newProduct);
 router.route("/products/:id").get(getProductDetails);
-router.route("/products/:id").put(updateProduct);
-router.route("/products/:id").delete(deleteProduct);
+router.route("/admin/products/:id").put(isAuthenticatedUser,authorizeRoles("admin"),updateProduct);
+router.route("/admin/products/:id").delete(isAuthenticatedUser,authorizeRoles("admin"),deleteProduct);
 
 
 export default router;
