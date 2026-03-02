@@ -170,4 +170,97 @@ export const resetPassword = asyncHandler(async(req, res, next) => {
 
     sendToken(user, 200, res);
 
-})
+});
+
+
+// Get current user profile => api/v1/me
+
+export const getUserProfile = asyncHandler((async(req, res, next) => {
+
+    const user = await User.findById(req?.user?._id);
+
+    res.status(200).json({
+        user
+    });
+
+
+}));
+
+
+// Update Password => /api/v1/password/update
+
+export const updatePassword = asyncHandler((async(req, res, next) => {
+
+    const user = await User.findById(req?.user?._id).select("+password");
+
+    // Check the previous user password
+
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+
+    if(!isPasswordMatched){
+        return next(new ErrorHandler("old Password does not match", 400))
+    }
+
+    user.password = req.body.password;
+
+    user.save();
+
+    res.status(200).json({
+        success:true
+    });
+
+
+}));
+
+
+// Update User profile => /api/v1/me/update
+
+export const updateProfile = asyncHandler((async(req, res, next) => {
+
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+    };
+
+    const user = await User.findByIdAndUpdate(req.user._id, newUserData, {new:true});
+
+    res.status(200).json({
+        user
+    });
+
+
+}));
+
+
+
+// Get all users - Admin => /api/v1/admin/users
+
+export const getAllUsers = asyncHandler((async(req, res, next) => {
+
+    const users = await User.find();
+
+    res.status(200).json({
+        users
+    });
+
+
+}));
+
+// Get User Details - Admin => /api/v1/admin/users/:id
+
+
+export const getUserDetails = asyncHandler((async(req, res, next) => {
+
+    const user = await User.findById(req.params.id);
+
+
+    if(!user){
+        return next(new ErrorHandler(`User not found with this id ${req.params.id}`, 400))
+    }
+
+    res.status(200).json({
+        user
+    });
+
+
+}));
