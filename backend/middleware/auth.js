@@ -26,8 +26,6 @@ export const isAuthenticatedUser = asyncHandler(async(req, res, next) => {
 
 export const authorizeRoles = (...roles) => {
 
-    console.log("admin", roles);
-
     return (req, res, next) => {
         if(!roles.includes(req.user.role)){
             return next(new ErrorHandler("Roles not access to this resource", 403));

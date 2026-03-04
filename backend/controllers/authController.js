@@ -264,3 +264,47 @@ export const getUserDetails = asyncHandler((async(req, res, next) => {
 
 
 }));
+
+
+
+// Update User - Admin => /api/v1/admin/user/:id
+
+export const updateUser = asyncHandler((async(req, res, next) => {
+
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+        role: req.body.role
+    };
+
+    const user = await User.findByIdAndUpdate(req.user._id, newUserData, {new:true});
+
+    res.status(200).json({
+        user
+    });
+
+
+}));
+
+
+// Delete User - Admin => /api/v1/admin/user/:id
+
+export const deleteUser = asyncHandler((async(req, res, next) => {
+
+    const user = await User.findById(req.params.id);
+
+
+    if(!user){
+        return next(new ErrorHandler(`User not found with this id ${req.params.id}`, 404))
+    }
+
+    // Remove user profile pic from clondinary
+
+    await user.deleteOne();
+
+    res.status(200).json({
+        success:true
+    });
+
+
+}));

@@ -1,6 +1,6 @@
 import express from "express";
 
-import {registerUser, loginUser, logout, forgotPassword,resetPassword, getUserProfile, updatePassword, updateProfile, getAllUsers, getUserDetails} from "../controllers/authController.js";
+import {registerUser, loginUser, logout, forgotPassword,resetPassword, getUserProfile, updatePassword, updateProfile, getAllUsers, getUserDetails, deleteUser, updateUser} from "../controllers/authController.js";
 
 import { isAuthenticatedUser,authorizeRoles } from "../middleware/auth.js";
 
@@ -16,6 +16,9 @@ router.route("/me/update").put(isAuthenticatedUser, updateProfile);
 router.route("/password/update").put(isAuthenticatedUser, updatePassword);
 
 router.route("/admin/users").get(isAuthenticatedUser,authorizeRoles("admin"), getAllUsers);
-router.route("/admin/users/:id").get(isAuthenticatedUser,authorizeRoles("admin"), getUserDetails);
+router.route("/admin/users/:id")
+.get(isAuthenticatedUser,authorizeRoles("admin"), getUserDetails)
+.put(isAuthenticatedUser,authorizeRoles("admin"), updateUser)
+.delete(isAuthenticatedUser, authorizeRoles("admin"), deleteUser);
 
 export default router;
