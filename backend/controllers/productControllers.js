@@ -8,7 +8,7 @@ import APIFilters from "../utils/apiFilters.js";
 
 export const getProducts = async (req, res) => {
 
-    const resPerPage = 1;
+    const resPerPage = 4;
 
     const apiFilters = new APIFilters(
         Product, 
