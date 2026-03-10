@@ -1,36 +1,22 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-import Product from "../models/product.js";
 import products from "./data.js";
+import Product from "../models/product.js";
 
+const seedProducts = async () => {
+  try {
+    await mongoose.connect("mongodb+srv://jaganjavid:javid123@cluster0.yo6zkax.mongodb.net/eShop");
 
-dotenv.config({
-    path:"backend/config/config.env"
-});
+    await Product.deleteMany();
+    console.log("Products are deleted");
 
+    await Product.insertMany(products);
+    console.log("Products are added");
 
-
-const seedProducts = async() => {
-
-    try{
-
-        await mongoose.connect(process.env.DB_URI);
-
-        // delete existing products
-
-        await Product.deleteMany();
-
-        // Insert new products
-        await Product.insertMany(products);
-
-        process.exit();
-
-    }catch(error){
-        console.log(error);
-        process.exit(1);
-    }
-
-
-}
+    process.exit();
+  } catch (error) {
+    console.log(error.message);
+    process.exit();
+  }
+};
 
 seedProducts();

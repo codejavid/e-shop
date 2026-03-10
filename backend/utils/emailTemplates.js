@@ -1,4 +1,4 @@
-export const getResetPasswordTemplate = (user, resetUrl) => `
+export const getResetPasswordTemplate = (username, resetUrl) => `
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -448,10 +448,10 @@ export const getResetPasswordTemplate = (user, resetUrl) => `
             <tr>
               <td class="email-masthead">
                 <a
-                  href="https://Eshop.com"
+                  href="https://shopit.com"
                   class="f-fallback email-masthead_name"
                 >
-                  Eshop
+                  ShopIT
                 </a>
               </td>
             </tr>
@@ -474,10 +474,10 @@ export const getResetPasswordTemplate = (user, resetUrl) => `
                   <tr>
                     <td class="content-cell">
                       <div class="f-fallback">
-                        <h1>Hi ${user},</h1>
+                        <h1>Hi ${username},</h1>
                         <p>
                           You recently requested to reset your password for your
-                          Eshop account. Use the button below to reset it.
+                          ShopIT account. Use the button below to reset it.
                           <strong
                             >This password reset is only valid for the next 30
                             minutes.</strong
@@ -521,7 +521,7 @@ export const getResetPasswordTemplate = (user, resetUrl) => `
                           <a href="{{support_url}}">contact support</a> if you
                           have questions.
                         </p>
-                        <p>Thanks, <br />The Eshop team</p>
+                        <p>Thanks, <br />The ShopIT team</p>
 
                         <table class="body-sub" role="presentation">
                           <tr>
@@ -556,7 +556,7 @@ export const getResetPasswordTemplate = (user, resetUrl) => `
                   <tr>
                     <td class="content-cell" align="center">
                       <p class="f-fallback sub align-center">
-                        Eshop
+                        ShopIT
                         <br />1234 Street Rd. <br />Suite 1234
                       </p>
                     </td>
@@ -570,5 +570,4 @@ export const getResetPasswordTemplate = (user, resetUrl) => `
     </table>
   </body>
 </html>
-
 `;
