@@ -1,15 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import productImage from "../assets/images/default_product.png"
 import {useGetProductsQuery} from "../redux/api/productsApi";
 import Productitem from './product/Productitem';
+import Loader from './layout/Loader';
+import toast from 'react-hot-toast';
 
 const Home = () => {
 
-  const {data, isLoading, error} = useGetProductsQuery();
+  const {data, isLoading, error, isError} = useGetProductsQuery();
+
+  useEffect(() => {
+
+    if(isError){
+      toast.error(error?.data?.message);
+    }
+
+  }, [isError]);
   
   if(isLoading){
     return (
-        <h4>Loading...</h4>
+        <Loader/>
     )
   }
 
